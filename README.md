@@ -12,7 +12,7 @@
   <a href="https://github.com/Mabms1974/Saturno">
     <img src="https://img.shields.io/badge/GitHub-Saturno-1a2e4a?logo=github" alt="Repositório">
   </a>
-  <img src="https://img.shields.io/badge/status-MVP%20em%20desenvolvimento-f5a623" alt="Status">
+  <img src="https://img.shields.io/badge/status-MVP%20completo-10b981" alt="Status">
   <img src="https://img.shields.io/badge/testes-86%2F86%20passando-10b981" alt="Testes">
   <img src="https://img.shields.io/badge/Node.js-20%2B-339933?logo=node.js" alt="Node">
 </p>
@@ -62,12 +62,10 @@ O **Saturno** resolve esse problema ao:
 | RN01 | O **ponto de partida** (ordem 1) **não conta** tempo parado                                     | ✅     |
 | RN02 | Tempo parado = horário de **saída − chegada** do ponto                                         | ✅     |
 | RN03 | Tempo total do roteiro = **soma dos tempos** de todos os pontos, exceto o de partida           | ✅     |
-| RN04 | Jornada padrão = **8 h/dia** (usada como base percentual nos indicadores)                      | ⏳     |
+| RN04 | Jornada padrão **parametrizável** (default 8 h/dia), usada para calcular horas extras          | ✅     |
 | RN05 | Cada roteiro pertence a **um único motorista** e a **uma única data**                          | ✅     |
 | RN06 | Os pontos têm **ordem sequencial** (1, 2, 3…) que define o trajeto do dia                     | ✅     |
-| RN07 | Custo do trajeto = função do valor do combustível, km/litro do veículo e distância percorrida  | ⏳     |
-
-> ⏳ = implementação prevista na camada do gestor (Paulo)
+| RN07 | Custo do trajeto = (distância ÷ km/litro do veículo) × preço do combustível vigente             | ✅     |
 
 ---
 
@@ -99,12 +97,13 @@ O **Saturno** resolve esse problema ao:
 - 🧮 **Cálculo automático** de tempo parado (RN01/RN02/RN03)
 - 🎯 **Ordem sequencial automática** dos pontos (RN06)
 
-### Camada do gestor (Paulo) — previsto
+### Camada do gestor (Paulo)
 
-- 📊 Dashboard com gráficos (dia, mês, período)
-- 💰 Parametrização de custos (combustível, km/l, jornada)
-- 📈 Histórico de pontos e tempos
-- 📤 Exportação de relatórios
+- 📊 **Dashboard** com KPIs (tempo total parado, custo consolidado, jornada média, roteiros no período) e gráficos de barra (tempo parado por dia e comparativo entre roteiros), em CSS puro, sem dependência externa
+- 🔎 **Filtros** por período (De/Até) e por motorista, tanto no dashboard quanto no histórico
+- 💰 **Parametrização de custos e jornada** — preço do combustível (R$/litro) e jornada padrão (h/dia), com **histórico de vigências**: ao salvar um novo valor, o anterior é preservado com data de início/fim
+- 📈 **Histórico de rotas** — tabela com tempo parado, custo, jornada e horas extras por roteiro
+- 📤 **Exportação de relatórios em CSV**, respeitando os mesmos filtros aplicados na tela
 
 ---
 
@@ -123,17 +122,27 @@ TP2_ES2/
 │   ├── models/
 │   │   ├── motoristaModel.js
 │   │   ├── roteiroModel.js
-│   │   └── pontoModel.js         # ⚙️ Cálculo das RN01/RN02/RN03 + geoloc
+│   │   ├── pontoModel.js         # ⚙️ Cálculo das RN01/RN02/RN03 + geoloc
+│   │   ├── parametroModel.js     # ⚙️ RN04/RN07 — vigência de combustível/jornada
+│   │   └── dashboardModel.js     # ⚙️ Agregações do dashboard/histórico
 │   ├── controllers/
 │   │   ├── motoristaController.js
 │   │   ├── roteiroController.js
-│   │   └── pontoController.js
+│   │   ├── pontoController.js
+│   │   ├── parametroController.js
+│   │   ├── dashboardController.js
+│   │   └── relatorioController.js
 │   ├── routes/
 │   │   ├── motoristaRoutes.js
 │   │   ├── roteiroRoutes.js
-│   │   └── pontoRoutes.js
+│   │   ├── pontoRoutes.js
+│   │   ├── parametroRoutes.js
+│   │   ├── dashboardRoutes.js
+│   │   └── relatorioRoutes.js
 │   └── tests/
-│       └── mvp.test.js           # 21 testes automatizados
+│       ├── mvp.test.js           # RN01/RN02/RN03/RN06 + CRUD operacional
+│       ├── gestao.test.js        # RN04/RN07 + parâmetros/dashboard
+│       └── full.test.js          # Suíte de ponta a ponta (todas as rotas)
 │
 ├── frontend/
 │   ├── index.html
@@ -141,8 +150,12 @@ TP2_ES2/
 │   ├── cadastro-roteiro.html
 │   ├── cadastro-ponto.html
 │   ├── registrar-ponto.html
+│   ├── dashboard.html
+│   ├── parametros.html
+│   ├── historico.html
 │   ├── css/
-│   │   └── style.css
+│   │   ├── style.css
+│   │   └── dashboard.css
 │   ├── img/
 │   │   └── logo.png
 │   └── js/
@@ -150,7 +163,10 @@ TP2_ES2/
 │       ├── motorista.js
 │       ├── roteiro.js
 │       ├── ponto.js              # Geolocalização + modal de edição
-│       └── registrar-ponto.js    # Captura de coords na chegada/saída
+│       ├── registrar-ponto.js    # Captura de coords na chegada/saída
+│       ├── dashboard.js          # KPIs + gráficos de barra em CSS puro
+│       ├── parametros.js         # Form de custos/jornada + histórico
+│       └── historico.js          # Tabela filtrável + exportação CSV
 │
 ├── artefatos/                    # Projeto Preliminar (documentação)
 │   ├── casos-de-uso/
@@ -309,6 +325,27 @@ Base URL: `http://localhost:3000/api`
 | PUT    | `/pontos/:id`                   | Atualiza                                             |
 | DELETE | `/pontos/:id`                   | Remove                                               |
 
+### Parâmetros
+
+| Método | Rota                   | Descrição                                                      |
+|--------|------------------------|-----------------------------------------------------------------|
+| GET    | `/parametros/vigente`  | Retorna o parâmetro de custo/jornada em vigor no momento         |
+| GET    | `/parametros/historico`| Lista todas as vigências já cadastradas                         |
+| POST   | `/parametros`          | Cria um novo parâmetro (fecha a vigência do anterior)            |
+
+### Dashboard
+
+| Método | Rota          | Descrição                                                                |
+|--------|---------------|---------------------------------------------------------------------------|
+| GET    | `/dashboard`  | Indicadores agregados (tempo parado, custo, jornada). Filtros: `inicio`, `fim`, `motorista_id` (query string) |
+
+### Relatórios
+
+| Método | Rota                    | Descrição                                              |
+|--------|-------------------------|---------------------------------------------------------|
+| GET    | `/relatorios/historico` | Lista uma linha por roteiro, com custo e jornada (mesmos filtros do dashboard) |
+| GET    | `/relatorios/exportar`  | Exporta o histórico filtrado em CSV                     |
+
 ### Exemplo de uso (curl)
 
 ```bash
@@ -368,6 +405,16 @@ curl -X POST http://localhost:3000/api/pontos/1/chegada \
 | data_hora_saida     | TEXT    | ISO 8601                                   |
 | tempo_parado_min    | INTEGER | Calculado automaticamente                  |
 
+### `parametro`
+
+| Campo              | Tipo    | Observação                                              |
+|--------------------|---------|----------------------------------------------------------|
+| id                 | INTEGER | PK                                                       |
+| preco_combustivel  | REAL    | R$/litro, usado na RN07                                  |
+| jornada_horas_dia  | REAL    | Default 8, usada na RN04                                 |
+| vigencia_inicio    | TEXT    | Timestamp em que o parâmetro passou a valer              |
+| vigencia_fim       | TEXT    | Preenchido automaticamente quando um novo parâmetro entra em vigor; `NULL` = vigente |
+
 ---
 
 ## 🗺️ Fluxo de uso (dia a dia)
@@ -381,7 +428,8 @@ curl -X POST http://localhost:3000/api/pontos/1/chegada \
    - Ao clicar em **Chegada**, o sistema captura **data/hora + localização**
    - Ao clicar em **Saída**, o sistema calcula o tempo parado
    - Ponto #1 (partida) sempre fica com **0 min** — RN01
-5. **Analisar histórico** → camada do gestor (dashboard)
+5. **Configurar custos/jornada** (opcional, mas recomendado) → `Parâmetros` (preço do combustível e jornada padrão)
+6. **Analisar o resultado** → `Dashboard` (KPIs e gráficos por período/motorista) e `Histórico` (tabela detalhada + exportação CSV)
 
 ---
 
@@ -417,8 +465,8 @@ Na pasta `artefatos/` estão os entregáveis do **Projeto Preliminar**:
 
 | Integrante | Responsabilidade                                                            | Progresso |
 |------------|------------------------------------------------------------------------------|:---------:|
-| **Marco**  | Cadastros, operação de campo (chegada/saída), geolocalização, RN01/RN02/RN03/RN06 | 🟢 95% |
-| **Paulo**  | Dashboard, histórico, parâmetros de custo, indicadores analíticos           | 🟡 em curso |
+| **Marco**  | Cadastros, operação de campo (chegada/saída), geolocalização, RN01/RN02/RN03/RN06 | 🟢 100% |
+| **Paulo**  | Dashboard, histórico, parâmetros de custo, indicadores analíticos           | 🟢 100% |
 
 ---
 
