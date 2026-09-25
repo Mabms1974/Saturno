@@ -1,0 +1,505 @@
+/* ============================================================
+   Saturno — Design System
+   Logística Inteligente
+   Paleta: azul-marinho + dourado (extraída da logo)
+   ============================================================ */
+
+:root {
+  /* Cores extraídas da logo Saturno */
+  --primary:        #1a2e4a;   /* azul-marinho da logo */
+  --primary-dark:   #0f1e33;
+  --primary-light:  #eaf0f8;
+  --accent:         #f5a623;   /* dourado do planeta */
+  --accent-dark:    #d98a0b;
+  --accent-light:   #fef5e7;
+
+  /* Estados */
+  --success:        #10b981;
+  --success-light:  #ecfdf5;
+  --danger:         #ef4444;
+  --danger-light:   #fef2f2;
+  --info:           #0ea5e9;
+  --info-light:     #f0f9ff;
+
+  /* Neutros */
+  --bg:             #f7f8fa;
+  --surface:        #ffffff;
+  --text:           #1f2937;
+  --text-muted:     #6b7280;
+  --text-soft:      #9ca3af;
+  --border:         #e5e7eb;
+  --border-strong:  #d1d5db;
+
+  /* Formas */
+  --radius-sm: 8px;
+  --radius:    14px;
+  --radius-lg: 20px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .04);
+  --shadow:    0 4px 14px rgba(15, 23, 42, .06);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, .10);
+  --shadow-primary: 0 8px 22px rgba(26, 46, 74, .28);
+
+  /* Tipografia */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background:
+    radial-gradient(1200px 400px at 50% -100px, #eaf0f8 0%, transparent 70%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   Header — com logo Saturno
+   ============================================================ */
+header {
+  background: linear-gradient(135deg, #1a2e4a 0%, #2c4a70 55%, #3d5a82 100%);
+  color: #fff;
+  padding: 14px 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(26, 46, 74, .25);
+}
+header::after {
+  content: "";
+  position: absolute;
+  right: -80px; top: -80px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(245, 166, 35, .18), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+header .header-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+header .brand-logo {
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  padding: 3px;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  line-height: 1.1;
+}
+header .sub {
+  font-size: .8rem;
+  opacity: .88;
+  margin-top: 2px;
+  font-weight: 400;
+  letter-spacing: .5px;
+}
+
+/* ============================================================
+   Navegação — barra estilo "pills"
+   ============================================================ */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--surface);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(180%) blur(6px);
+}
+nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: .88rem;
+  font-weight: 500;
+  transition: background .15s, color .15s, transform .1s;
+}
+nav a:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+nav a:active { transform: scale(.97); }
+nav a.ativo {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow-primary);
+}
+
+/* ============================================================
+   Layout principal
+   ============================================================ */
+main {
+  max-width: 1000px;
+  margin: 26px auto 60px;
+  padding: 0 18px;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.card h2::before {
+  content: "";
+  width: 4px; height: 18px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+  display: inline-block;
+}
+
+/* ============================================================
+   Formulários
+   ============================================================ */
+label {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 14px 0 6px;
+  letter-spacing: .1px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: .95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+input::placeholder, textarea::placeholder { color: var(--text-soft); }
+input:hover, select:hover, textarea:hover { border-color: #b8bcc7; }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(26, 46, 74, .14);
+}
+
+/* ============================================================
+   Botões
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: .1px;
+  transition: transform .1s, box-shadow .15s, background .15s, opacity .15s;
+}
+.btn:active      { transform: translateY(1px) scale(.99); }
+.btn:disabled    { opacity: .45; cursor: not-allowed; transform: none; }
+.btn:not(:disabled):hover { box-shadow: var(--shadow); }
+
+.btn-primary  {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--shadow-primary);
+}
+.btn-primary:not(:disabled):hover { background: var(--primary-dark); }
+
+.btn-verde    { background: var(--success); color: #fff; }
+.btn-verde:not(:disabled):hover { background: #059669; }
+
+.btn-vermelho { background: var(--danger); color: #fff; }
+.btn-vermelho:not(:disabled):hover { background: #dc2626; }
+
+.btn-sec      { background: #f3f4f6; color: var(--text); }
+.btn-sec:not(:disabled):hover { background: #e5e7eb; }
+
+/* Botão de destaque (dourado) — opcional, para CTAs importantes */
+.btn-accent   { background: var(--accent); color: #fff; }
+.btn-accent:not(:disabled):hover { background: var(--accent-dark); }
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   Tabelas
+   ============================================================ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: .9rem;
+  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th, td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+tr:last-child td { border-bottom: none; }
+th {
+  background: #f9fafb;
+  font-weight: 600;
+  font-size: .74rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+tbody tr { transition: background .1s; }
+tbody tr:hover { background: #fafbfc; }
+
+/* ============================================================
+   Itens de ponto (tela de campo)
+   ============================================================ */
+.ponto-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s, transform .12s;
+}
+.ponto-item:hover { box-shadow: var(--shadow); }
+
+.ponto-item.partida {
+  border-left-color: var(--text-soft);
+  background: #fbfbfd;
+}
+.ponto-item.concluido {
+  border-left-color: var(--success);
+  background: linear-gradient(0deg, rgba(16,185,129,.04), rgba(16,185,129,.04)), #fff;
+}
+
+.ponto-item h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ponto-item .meta {
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+.ponto-item .tempo {
+  font-weight: 700;
+  color: var(--success);
+  font-size: .95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ponto-item.partida .tempo { color: var(--text-muted); }
+
+.ponto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ============================================================
+   Alertas
+   ============================================================ */
+.alerta {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin: 12px 0;
+  font-size: .88rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  animation: fadeIn .25s ease;
+}
+.alerta.ok   { background: var(--success-light); color: #065f46; border-color: #a7f3d0; }
+.alerta.erro { background: var(--danger-light);  color: #991b1b; border-color: #fecaca; }
+.alerta.info { background: var(--info-light);    color: #075985; border-color: #bae6fd; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Home — grade de menu
+   ============================================================ */
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+.menu-card {
+  position: relative;
+  display: block;
+  background: var(--surface);
+  padding: 22px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: transform .15s, box-shadow .2s, border-color .15s;
+  overflow: hidden;
+}
+.menu-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+.menu-card:nth-child(2)::before { background: linear-gradient(90deg, #f5a623, #fbbf24); }
+.menu-card:nth-child(3)::before { background: linear-gradient(90deg, #2c4a70, #3d5a82); }
+.menu-card:nth-child(4)::before { background: linear-gradient(90deg, #10b981, #22c55e); }
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: #c7cbe6;
+}
+.menu-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.menu-card p {
+  margin: 0;
+  font-size: .86rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Resumo (tela registrar-ponto)
+   ============================================================ */
+#resumo-texto {
+  font-size: .92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+#resumo-texto strong { color: var(--text); }
+
+/* ============================================================
+   Home — bloco de boas-vindas com logo grande
+   ============================================================ */
+.bem-vindo {
+  text-align: center;
+  padding: 32px 24px;
+}
+.bem-vindo img {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 8px 20px rgba(26, 46, 74, .15));
+}
+.bem-vindo h2 {
+  justify-content: center;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+.bem-vindo h2::before { display: none; }
+.bem-vindo p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+@media (max-width: 640px) {
+  header { padding: 12px 18px; }
+  header .brand-logo { height: 40px; width: 40px; }
+  header h1 { font-size: 1.05rem; }
+  header .sub { font-size: .72rem; }
+  nav { padding: 8px 12px; gap: 4px; }
+  nav a { font-size: .8rem; padding: 7px 11px; }
+  main { padding: 0 12px; margin-top: 18px; }
+  .card { padding: 16px; border-radius: 12px; }
+  .ponto-item { padding: 14px; }
+  .ponto-header { flex-direction: column; align-items: flex-start; }
+  .btn { padding: 9px 14px; font-size: .85rem; }
+  th, td { padding: 10px 10px; font-size: .82rem; }
+  .bem-vindo { padding: 22px 16px; }
+  .bem-vindo img { max-width: 170px; }
+  .bem-vindo h2 { font-size: 1.1rem; }
+}
+
+/* ============================================================
+   Detalhes finos
+   ============================================================ */
+::selection { background: rgba(245, 166, 35, .28); }
+
+/* Scrollbar discreta no desktop */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #d5d8e0;
+    border-radius: 10px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #b9bdc9; }
+}

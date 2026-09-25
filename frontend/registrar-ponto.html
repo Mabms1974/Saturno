@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saturno — Registrar Ponto</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <img src="img/logo.png" alt="Saturno" class="brand-logo">
+      <div><h1>Saturno</h1><div class="sub">Logística Inteligente</div></div>
+    </div>
+  </header>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="cadastro-motorista.html">Motoristas</a>
+    <a href="cadastro-roteiro.html">Roteiros</a>
+    <a href="cadastro-ponto.html">Pontos</a>
+    <a href="registrar-ponto.html">Registrar Ponto</a>
+  </nav>
+  <main>
+    <div class="card">
+      <h2>Selecione o roteiro do dia</h2>
+      <div id="alerta" class="alerta" style="display:none;"></div>
+      <label for="sel-roteiro">Roteiro</label>
+      <select id="sel-roteiro"></select>
+    </div>
+
+    <div class="card" id="resumo" style="display:none;">
+      <h2>Resumo do roteiro</h2>
+      <p id="resumo-texto" style="margin:0;"></p>
+    </div>
+
+    <div id="pontos-container"></div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/registrar-ponto.js"></script>
+</body>
+</html>

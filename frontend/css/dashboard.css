@@ -1,0 +1,117 @@
+/* ============================================================
+   Saturno — Camada Gestora (Paulo)
+   Extensão do Design System em css/style.css — reutiliza as
+   variáveis definidas em :root (--primary, --accent, --surface…)
+   ============================================================ */
+
+/* ---------- KPIs ---------- */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.kpi .kpi-label {
+  font-size: .78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.kpi .kpi-valor {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 6px;
+}
+
+/* ---------- Filtros ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+.filtros .campo { min-width: 160px; }
+.filtros label { margin-top: 0; }
+
+/* ---------- Gráfico de barras (sem dependência externa) ---------- */
+.grafico-barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 200px;
+  padding: 10px 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.grafico-barras .barra-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 28px;
+}
+.grafico-barras .barra {
+  width: 100%;
+  max-width: 34px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 6px 6px 0 0;
+  transition: height .25s ease;
+}
+.grafico-barras .barra-valor {
+  font-size: .72rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.grafico-barras .barra-label {
+  font-size: .72rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ---------- Estado vazio ---------- */
+.estado-vazio {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+  font-size: .92rem;
+}
+
+/* ---------- Modal de detalhe do roteiro ---------- */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-caixa {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 22px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.modal-caixa h3 { margin-top: 0; }
+.modal-caixa .fechar {
+  margin-top: 16px;
+}

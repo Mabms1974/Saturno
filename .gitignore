@@ -1,0 +1,27 @@
+# Dependências
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Banco de dados local (não versionar)
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Arquivos temporários
+*.tmp
+.env
