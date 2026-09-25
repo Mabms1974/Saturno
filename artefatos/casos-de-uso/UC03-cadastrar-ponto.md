@@ -9,7 +9,7 @@
 | **Ator**     | Gerente / Coordenador                                                  |
 | **Objetivo** | Adicionar um ponto (endereço + coordenadas) a um roteiro existente     |
 | **Prioridade** | Alta                                                                 |
-| **Requisitos** | RF03, RN06                                                           |
+| **Requisitos** | RF03, RN06, RF08                                                     |
 
 ## Pré-condições
 
@@ -20,6 +20,8 @@
 
 - O ponto é persistido com uma **ordem sequencial** definida automaticamente (RN06).
 - Se o ponto for o primeiro do roteiro (ordem 1), ele é marcado como **ponto de partida**.
+- Quando cadastrado via **FA04 — Entrada de Pedidos**, o ponto fica vinculado ao
+  `pedidoId` de origem, associando o endereço de entrega do pedido ao roteiro diário.
 
 ## Fluxo Principal
 
@@ -30,7 +32,9 @@
    - Latitude / Longitude
    - Botão **📍 Usar minha localização**
 3. O ator seleciona o roteiro.
-4. O ator informa o endereço manualmente **ou** clica em **📍 Usar minha localização**.
+4. O ator informa o endereço manualmente **ou** clica em **📍 Usar minha localização** **ou**
+   informa um **número de pedido** para importar o endereço de entrega associado (ver FA04 —
+   Entrada de Pedidos).
 5. Se o ator clicar em "Usar minha localização":
    1. O sistema solicita permissão de geolocalização ao navegador.
    2. O sistema obtém as coordenadas e as exibe nos campos.
@@ -53,6 +57,25 @@
 
 ### FA03 — Editar um ponto existente
 - A partir da lista de pontos filtrada por roteiro, o ator pode clicar em **Editar** para abrir um modal e corrigir endereço/coordenadas.
+
+### FA04 — Entrada de Pedidos (importar/vincular número de pedido)
+1. No passo 4, o ator informa o **número do pedido** no campo **Vincular pedido** (em vez
+   de digitar o endereço manualmente ou usar a geolocalização).
+2. O sistema consulta o pedido pelo número informado (integração com o módulo/serviço de
+   pedidos).
+3. Se o pedido for encontrado, o sistema preenche automaticamente **Endereço**,
+   **Latitude/Longitude** (quando disponíveis) com os dados de entrega do pedido, e associa
+   o `pedidoId` ao ponto que está sendo criado.
+4. O ator revisa/ajusta os dados preenchidos e prossegue no passo 6 (Adicionar ponto).
+5. Se o pedido não for encontrado, o sistema exibe "Pedido não encontrado" e mantém os
+   campos disponíveis para preenchimento manual ou uso da geolocalização (fluxo principal).
+
+## Fluxos de Exceção — Vínculo com Pedido
+
+### FE03 — Falha na consulta ao serviço de pedidos
+- No passo 2 da FA04, se a consulta ao serviço/módulo de pedidos falhar ou exceder o tempo
+  limite, o sistema exibe mensagem de erro e permite o preenchimento manual do ponto,
+  sem bloquear o cadastro.
 
 ## Fluxos de Exceção
 

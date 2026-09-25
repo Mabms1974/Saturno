@@ -42,6 +42,8 @@ graph LR
     A((Gerente/Coordenador)) --> B[Tela Cadastro de Ponto]
     B --> H(Navegador — Geolocalização)
     H --> I(Serviço Nominatim — Geocodificação Reversa)
+    B --> J(Serviço de Pedidos)
+    J --> K{{Entidade Pedido}}
     B --> C(Controle Ponto)
     C --> D{{Entidade Roteiro}}
     C --> E{{Entidade Ponto}}
@@ -52,7 +54,11 @@ graph LR
 - `B → H → I`: fluxo do botão "Usar minha localização" — captura coordenadas do dispositivo
   e resolve o endereço por geocodificação reversa (FA01/FA02 tratam recusa de permissão ou
   falha do serviço, mantendo o preenchimento manual).
-- `C → E`: aplica a **RN06** (ordem sequencial automática = último + 1) antes de gravar.
+- `B → J → K`: fluxo de **Entrada de Pedidos** (FA04) — o ator informa o número do pedido,
+  o sistema consulta o Serviço de Pedidos e importa o endereço/coordenadas de entrega para
+  o formulário do ponto (FE03 trata falha na consulta, mantendo o preenchimento manual).
+- `C → E`: aplica a **RN06** (ordem sequencial automática = último + 1) antes de gravar; se
+  originado da FA04, também grava o `pedidoId` associado ao ponto.
 - `C → D`: valida se o `roteiroId` selecionado existe (FE01).
 
 ## UC04 — Registrar Chegada/Saída em Ponto
